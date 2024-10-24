@@ -2,7 +2,15 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import os
+import firebase_admin
+from firebase_admin import credentials, firestore
 
+
+cred = credentials.Certificate("your-fit-tracker/serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
+
+
+db = firestore.client()
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
@@ -10,19 +18,14 @@ jumping_jack_count = 0
 in_jumping_jack = False
 hand_threshold = 0.2
 
-video_path = (
-    r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\Jumping Jacks.mkv"
-)
 cap = cv2.VideoCapture(0)
 
-output_folder = r"output"
-os.makedirs(output_folder, exist_ok=True)
 
+def write_count_to_firestore(count):
 
-def write_count_to_file(count):
-    output_file_path = os.path.join(output_folder, "jumping_jack_count.txt")
-    with open(output_file_path, "a") as file:
-        file.write(f"Jumping Jacks Count: {count}\n")
+    doc_ref = db.collection("JumpingJacks").document()
+    doc_ref.set({"jumps_count": count}, merge=True)
+    print(f"Jumps count {count} saved to Firestore")
 
 
 with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
@@ -51,7 +54,7 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
                     if not in_jumping_jack:
                         in_jumping_jack = True
                         jumping_jack_count += 1
-                        write_count_to_file(jumping_jack_count)
+                        write_count_to_firestore(jumping_jack_count)
                 else:
                     in_jumping_jack = False
 
@@ -77,7 +80,7 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2),
         )
 
-        cv2.imshow("Mediapipe Feed", image)
+        cv2.imshow("Jumping Jacks Counter", image)
 
         if cv2.waitKey(10) & 0xFF == ord("q"):
             break

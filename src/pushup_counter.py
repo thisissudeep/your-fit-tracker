@@ -5,11 +5,11 @@ import os
 import firebase_admin
 from firebase_admin import credentials, firestore
 
- 
-cred = credentials.Certificate('your-fit-tracker/serviceAccountKey.json')
+
+cred = credentials.Certificate("your-fit-tracker/serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
- 
+
 db = firestore.client()
 
 mp_drawing = mp.solutions.drawing_utils
@@ -31,17 +31,10 @@ def calculate_angle(a, b, c):
     return angle
 
 
-video_path = (
-    r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\pushup video.mp4"
-)
-output_folder = r"output"
-os.makedirs(output_folder, exist_ok=True)
-
-
 def write_count_to_firestore(count):
-   
-    doc_ref = db.collection('PushUp').document()
-    doc_ref.set({'pushups_count': count}, merge=True)
+
+    doc_ref = db.collection("PushUp").document()
+    doc_ref.set({"pushups_count": count}, merge=True)
     print(f"Push-ups count {count} saved to Firestore")
 
 
@@ -111,8 +104,8 @@ try:
                     if consecutive_frames > 5:
                         stage = "up"
                         count += 1
-                        print(f"Push-ups: {count}")  
-                        write_count_to_firestore(count)  
+                        print(f"Push-ups: {count}")
+                        write_count_to_firestore(count)
                         consecutive_frames = 0
                 else:
                     consecutive_frames = 0
@@ -144,4 +137,4 @@ except KeyboardInterrupt:
 
 finally:
     cap.release()
-    cv2.destroyAllWindows() 
+    cv2.destroyAllWindows()

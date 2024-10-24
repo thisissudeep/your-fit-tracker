@@ -3,17 +3,33 @@ import mediapipe as mp
 import numpy as np
 import os
 
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+
+cred = credentials.Certificate("your-fit-tracker/serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
+
+
+db = firestore.client()
+
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
-video_path = r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\Floor seated head rotations.mkv"
+
 cap = cv2.VideoCapture(0)
-output_folder = r"output"
-os.makedirs(output_folder, exist_ok=True)
+
 
 count = 0
 rotation_stage = "front"
 rotation_angle_threshold = 80
+
+
+def write_count_to_firestore(count):
+
+    doc_ref = db.collection("HeadRotation").document()
+    doc_ref.set({"head_rotation_count": count}, merge=True)
+    print(f"Head Rotation count {count} saved to Firestore")
 
 
 def calculate_angle(point1, point2, point3):
@@ -25,12 +41,6 @@ def calculate_angle(point1, point2, point3):
     cosine_angle = np.dot(ab, ac) / (np.linalg.norm(ab) * np.linalg.norm(ac))
     angle = np.arccos(np.clip(cosine_angle, -1.0, 1.0))
     return np.degrees(angle)
-
-
-def write_count_to_file(count):
-    output_file_path = os.path.join(output_folder, "head_rotation_count.txt")
-    with open(output_file_path, "a") as file:
-        file.write(f"Head Rotation Count: {count}\n")
 
 
 with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
@@ -69,7 +79,7 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             else:
                 if rotation_stage == "turned":
                     count += 1
-                    write_count_to_file(count)
+                    write_count_to_firestore(count)
                     rotation_stage = "front"
 
         cv2.putText(

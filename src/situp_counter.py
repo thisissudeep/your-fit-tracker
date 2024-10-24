@@ -2,7 +2,15 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import os
+import firebase_admin
+from firebase_admin import credentials, firestore
 
+
+cred = credentials.Certificate("your-fit-tracker/serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
+
+
+db = firestore.client()
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
@@ -20,20 +28,14 @@ def calculate_angle(a, b, c):
     return angle
 
 
-output_folder = r"output"
-os.makedirs(output_folder, exist_ok=True)
+def write_count_to_firestore(count):
+
+    doc_ref = db.collection("Squats").document()
+    doc_ref.set({"squat_count": count}, merge=True)
+    print(f"Squat count {count} saved to Firestore")
 
 
-def export_count_to_file(count):
-    output_file_path = os.path.join(output_folder, "squat_count.txt")
-    with open(output_file_path, "a") as f:
-        f.write(f"Squats: {count}\n")
-
-
-video_path = (
-    r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\situp video.mkv"
-)
-cap = cv2.VideoCapture(video_path)
+cap = cv2.VideoCapture(0)
 print(f"Video capture opened: {cap.isOpened()}")
 count = 0
 stage = None
@@ -120,6 +122,6 @@ try:
             if cv2.waitKey(10) & 0xFF == ord("q"):
                 break
 finally:
-    export_count_to_file(count)
+    write_count_to_firestore(count)
     cap.release()
     cv2.destroyAllWindows()

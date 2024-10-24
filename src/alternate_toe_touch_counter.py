@@ -2,7 +2,15 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import os
+import firebase_admin
+from firebase_admin import credentials, firestore
 
+
+cred = credentials.Certificate("your-fit-tracker/serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
+
+
+db = firestore.client()
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
@@ -13,15 +21,12 @@ def calculate_distance(a, b):
     return np.linalg.norm(a - b)
 
 
-def write_count_to_file(count):
-    output_file_path = os.path.join(output_folder, "toe_touches_count.txt")
-    with open(output_file_path, "a") as f:
-        f.write(f"Toe Touches: {count}\n")
+def write_count_to_firestore(count):
 
+    doc_ref = db.collection("AlternateToeTouches").document()
+    doc_ref.set({"toe_touches_count": count}, merge=True)
+    print(f"Toe Touches count {count} saved to Firestore")
 
-video_path = r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\alternate toe touch video.mkv"
-output_folder = r"output"
-os.makedirs(output_folder, exist_ok=True)
 
 cap = cv2.VideoCapture(0)
 count = 0
@@ -65,13 +70,13 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             if distance_left_hand_right_foot < 0.1:
                 if stage != "left_hand_right_foot":
                     count += 1
-                    write_count_to_file(count)
+                    write_count_to_firestore(count)
                     stage = "left_hand_right_foot"
 
             if distance_right_hand_left_foot < 0.1:
                 if stage != "right_hand_left_foot":
                     count += 1
-                    write_count_to_file(count)
+                    write_count_to_firestore(count)
                     stage = "right_hand_left_foot"
 
         except Exception as e:
