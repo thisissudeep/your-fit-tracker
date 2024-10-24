@@ -1,1 +1,0 @@
-write_count_to_firestore
