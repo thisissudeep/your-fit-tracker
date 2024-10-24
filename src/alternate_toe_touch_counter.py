@@ -20,7 +20,7 @@ def write_count_to_file(count):
 
 
 video_path = r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\alternate toe touch video.mkv"
-output_folder = r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\output"
+output_folder = r"output"
 os.makedirs(output_folder, exist_ok=True)
 
 cap = cv2.VideoCapture(0)

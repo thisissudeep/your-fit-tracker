@@ -8,7 +8,7 @@ mp_pose = mp.solutions.pose
 
 video_path = r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\videos\Floor seated head rotations.mkv"
 cap = cv2.VideoCapture(0)
-output_folder = r"C:\Users\HP\Documents\Python Scripts\Your Fit Tracker\output"
+output_folder = r"output"
 os.makedirs(output_folder, exist_ok=True)
 
 count = 0
