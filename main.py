@@ -6,6 +6,7 @@ from datetime import datetime
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
+import time
 
 
 cred = credentials.Certificate("serviceAccountKey.json")
@@ -27,6 +28,75 @@ def write_count_to_firestore(user_id, exercise_counts):
         .document(datetime.now().strftime("%H:%M:%S"))
     )
     doc_ref.set(exercise_counts, merge=True)
+
+
+def start_break():
+    img_path = r"C:\Users\HP\Documents\Python Scripts\images\rest image.jpg"
+    img = cv2.imread(img_path)
+
+    if img is None:
+        print("Image not found at the specified path.")
+        return
+
+    img = cv2.resize(img, (800, 600))
+
+    window_name = "Break Time"
+    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(window_name, 800, 600)
+
+    for i in range(10, -1, -1):
+        img_copy = img.copy()
+
+        text = f"Break Time: {i} seconds left"
+
+        height, width, _ = img.shape
+
+        font_scale = 1.5
+        font_thickness = 2
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        text_size = cv2.getTextSize(text, font, font_scale, font_thickness)[0]
+        text_x = (width - text_size[0]) // 2
+        text_y = (height + text_size[1]) // 2
+
+        cv2.putText(
+            img_copy,
+            text,
+            (text_x, text_y),
+            font,
+            font_scale,
+            (0, 0, 0),
+            font_thickness + 2,
+            cv2.LINE_AA,
+        )
+        cv2.putText(
+            img_copy,
+            text,
+            (text_x, text_y),
+            font,
+            font_scale,
+            (255, 255, 255),
+            font_thickness,
+            cv2.LINE_AA,
+        )
+
+        cv2.imshow(window_name, img_copy)
+
+        cv2.waitKey(1000)
+
+    cv2.destroyAllWindows()
+
+
+def calculate_angle(a, b, c):
+    a = np.array(a)
+    b = np.array(b)
+    c = np.array(c)
+    radians = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(
+        a[1] - b[1], a[0] - b[0]
+    )
+    angle = np.abs(radians * 180.0 / np.pi)
+    if angle > 180.0:
+        angle = 360 - angle
+    return angle
 
 
 def detect_squats(cap):
@@ -139,6 +209,7 @@ def detect_pushups(cap):
             min_detection_confidence=0.5, min_tracking_confidence=0.5
         ) as pose:
             cv2.namedWindow("Push-up Detection", cv2.WINDOW_NORMAL)
+            cv2.resizeWindow("Push-up Detection", 800, 600)
             while count < 10:
                 ret, frame = cap.read()
                 if not ret:
@@ -231,19 +302,6 @@ def detect_pushups(cap):
         return count
 
 
-def calculate_angle(a, b, c):
-    a = np.array(a)
-    b = np.array(b)
-    c = np.array(c)
-    radians = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(
-        a[1] - b[1], a[0] - b[0]
-    )
-    angle = np.abs(radians * 180.0 / np.pi)
-    if angle > 180.0:
-        angle = 360 - angle
-    return angle
-
-
 def detect_head_rotation(cap):
     count = 0
     rotation_stage = "front"
@@ -254,6 +312,7 @@ def detect_head_rotation(cap):
             min_detection_confidence=0.5, min_tracking_confidence=0.5
         ) as pose:
             cv2.namedWindow("Head Rotation Detection", cv2.WINDOW_NORMAL)
+            cv2.resizeWindow("Head Rotation Detection", 800, 600)
 
             while count < 10:
                 ret, frame = cap.read()
@@ -338,7 +397,7 @@ def detect_jumps(cap):
             min_detection_confidence=0.5, min_tracking_confidence=0.5
         ) as pose:
             cv2.namedWindow("Jump Counter", cv2.WINDOW_NORMAL)
-
+            cv2.resizeWindow("Jump Counter", 800, 600)
             while cap.isOpened() and jumping_jack_count < 10:
                 ret, frame = cap.read()
                 if not ret:
@@ -414,6 +473,7 @@ def detect_alternate_toe_touch(cap):
             min_detection_confidence=0.5, min_tracking_confidence=0.5
         ) as pose:
             cv2.namedWindow("Toe Touch Detection", cv2.WINDOW_NORMAL)
+            cv2.resizeWindow("Toe Touch Detection", 800, 600)
             while count < 10:
                 ret, frame = cap.read()
                 if not ret:
@@ -512,22 +572,37 @@ def main():
             if choice == "1":
                 cap = cv2.VideoCapture(0)
                 exercise_data["squats"] = detect_squats(cap)
+                print("Exercise completed. Starting break...")
+                start_break()
+                print("Break over. Let's get back to exercising!")
 
             elif choice == "2":
                 cap = cv2.VideoCapture(0)
                 exercise_data["pushups"] = detect_pushups(cap)
+                print("Exercise completed. Starting break...")
+                start_break()
+                print("Break over. Let's get back to exercising!")
 
             elif choice == "3":
                 cap = cv2.VideoCapture(0)
                 exercise_data["head_rotation"] = detect_head_rotation(cap)
+                print("Exercise completed. Starting break...")
+                start_break()
+                print("Break over. Let's get back to exercising!")
 
             elif choice == "4":
                 cap = cv2.VideoCapture(0)
                 exercise_data["jumping jacks"] = detect_jumps(cap)
+                print("Exercise completed. Starting break...")
+                start_break()
+                print("Break over. Let's get back to exercising!")
 
             elif choice == "5":
                 cap = cv2.VideoCapture(0)
                 exercise_data["alternate_toe_touches"] = detect_alternate_toe_touch(cap)
+                print("Exercise completed. Starting break...")
+                start_break()
+                print("Break over. Let's get back to exercising!")
 
             elif choice == "6":
                 break
@@ -536,7 +611,7 @@ def main():
                 print("Invalid choice, please try again.")
 
     finally:
-        write_count_to_firestore("Monishwaran", exercise_data)
+        print(exercise_data)
 
 
 if __name__ == "__main__":
