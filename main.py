@@ -611,7 +611,7 @@ def main():
                 print("Invalid choice, please try again.")
 
     finally:
-        print(exercise_data)
+        write_count_to_firestore("Sabareesh M", exercise_data)
 
 
 if __name__ == "__main__":
