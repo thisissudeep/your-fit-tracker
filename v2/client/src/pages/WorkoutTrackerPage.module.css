@@ -1,0 +1,22 @@
+/* client/src/pages/WorkoutTrackerPage.module.css */
+.workoutTrackerPage {
+  /* REMOVED: background-image and related properties.
+     These are now handled by App.js and applied to the body. */
+  min-height: 100%; /* Ensure it takes full height within app-main-content */
+  width: 100%;
+  padding: 0; /* No direct padding here, app-main-content handles it */
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  margin-top: 50px;
+
+}
+
+@media (max-width: 768px) {
+  /* .workoutTrackerPage {
+    padding: 0;
+  } */
+}

@@ -1,2 +1,45 @@
+# For version 1:
+
 # Google Cloud / Firebase Service Account Key
 v1/serviceAccountKey.json
+
+
+
+
+# For version 2:
+
+# Node.js modules for Backend (server folder)
+v2/server/node_modules
+
+# Environment variables for Backend (server folder)
+v2/server/.env
+
+# Node.js modules for Frontend (client folder)
+v2/client/node_modules
+
+# Environment variables for Frontend (client folder)
+# Create React App often uses specific .env files like these
+v2/client/.env
+v2/client/.env.local
+v2/client/.env.development.local
+v2/client/.env.test.local
+v2/client/.env.production.local
+
+# Frontend specific build output (React build folder)
+v2/client/build
+
+# Logs and Debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Yarn Plug'n'Play (if you're using Yarn PnP)
+.pnp
+.pnp.js
+
+# Testing and Coverage reports
+/coverage
+
+# Operating System Files
+.DS_Store # macOS specific

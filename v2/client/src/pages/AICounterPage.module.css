@@ -1,0 +1,73 @@
+/* client/src/pages/AICounterPage.module.css */
+.aiCounterPage {
+  min-height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center the content vertically within the main area */
+}
+
+.aiCounterBox {
+  background-color: var(--ai-counter-box-bg);
+  border: 1px solid var(--ai-counter-box-border);
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 800px; /* Consistent max-width with LiveWorkoutCounter */
+  width: 100%;
+  box-shadow: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center contents within the box */
+  gap: 20px;
+}
+
+.heading {
+  color: var(--heading-color);
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.description {
+  color: var(--text-color);
+  margin: 0;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Removed cameraPlaceholder, cameraText, selectedExerciseName, cameraIcon, cameraButton styles from here */
+/* These are now managed within LiveWorkoutCounter.js and LiveWorkoutCounter.module.css */
+
+/* Removed dropdown styles, already in DropdownSelect.module.css */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .aiCounterBox {
+    padding: 20px;
+    gap: 15px;
+  }
+  .heading {
+    font-size: 1.6rem;
+  }
+  .description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .aiCounterBox {
+    padding: 15px;
+  }
+  .heading {
+    font-size: 1.4rem;
+  }
+  .description {
+    font-size: 0.9rem;
+  }
+}

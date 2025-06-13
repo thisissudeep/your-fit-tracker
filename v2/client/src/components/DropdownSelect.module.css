@@ -1,0 +1,50 @@
+/* client/src/components/DropdownSelect.module.css */
+.selectContainer {
+    margin-bottom: 0;
+    /* Adjusted margin to fit within the new box layout */
+    width: 100%;
+    max-width: 400px;
+    /* Keep max-width for dropdown */
+    text-align: left;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    
+    /* Reduced margin */
+    font-weight: bold;
+    color: var(--text-color);
+    /* Matches form label color */
+    font-size: 0.9rem;
+    /* Slightly smaller for form consistency */
+}
+
+.selectField {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--input-border-color);
+    /* Matches form input border */
+    background-color: var(--input-bg-color);
+    /* Matches form input background */
+    color: var(--input-text-color);
+    /* Matches form input text color */
+    font-size: 0.95rem;
+    /* Matches form input font size */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='var(--text-color)'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    cursor: pointer;
+    
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.selectField:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    
+}
