@@ -13,7 +13,7 @@ const DashboardPage = () => {
   const [workouts, setWorkouts] = useState([]);
   // State for handling loading status and errors specific to the workout list.
   const [listLoading, setListLoading] = useState(false);
-  const [listError, setListError] = null;
+  const [listError, setListError] = useState(null);
 
   // --- Function to fetch all workouts (memoized with useCallback) ---
   // useCallback is used here to prevent this function from being re-created
