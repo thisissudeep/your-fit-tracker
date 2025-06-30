@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react'; // Import hooks
 import WorkoutList from '../components/WorkoutList';
 import styles from './DashboardPage.module.css'; // Import CSS Module
-import appStyles from '../App.css'; // Import App.css for global styles
+import appStyles from '../App.css'; // Import App.css for global styles - assuming this is correct path
+
+// Get the base API URL from the environment variables.
+// This will be 'http://localhost:4000' in development
+// and 'https://your-fit-tracker-backend.onrender.com' in production.
+const API_BASE_URL = process.env.REACT_APP_BACKEND_BASE_URL;
 
 const DashboardPage = () => {
   // State to store the list of workouts fetched from the backend.
   const [workouts, setWorkouts] = useState([]);
   // State for handling loading status and errors specific to the workout list.
   const [listLoading, setListLoading] = useState(false);
-  const [listError, setListError] = useState(null);
-
-  // Get the API URL from the .env file.
-  // This environment variable is exposed by Create React App to the browser.
-  const API_URL = process.env.REACT_APP_API_URL;
+  const [listError, setListError] = null;
 
   // --- Function to fetch all workouts (memoized with useCallback) ---
   // useCallback is used here to prevent this function from being re-created
@@ -21,8 +22,8 @@ const DashboardPage = () => {
     setListLoading(true); // Set loading state for the list to true
     setListError(null);   // Clear any previous list errors
     try {
-      // Perform a GET request to the backend API using the constructed URL.
-      const response = await fetch(API_URL);
+      // Construct the full API URL by appending the endpoint
+      const response = await fetch(`${API_BASE_URL}/api/workouts`);
       if (!response.ok) {
         // If the HTTP response status is not OK (e.g., 404, 500), throw an error.
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,7 +37,7 @@ const DashboardPage = () => {
     } finally {
       setListLoading(false); // Reset loading state for the list.
     }
-  }, [API_URL]); // Dependency array: re-create fetchWorkouts only if API_URL changes.
+  }, []); // Removed API_URL from dependencies, as API_BASE_URL is now a constant
 
   // --- useEffect hook to fetch workouts when the component mounts ---
   // This effect runs once when the DashboardPage component first renders.
@@ -47,7 +48,7 @@ const DashboardPage = () => {
   return (
     <div className={styles.dashboardPage}>
       {/* Apply the global class for white text and restore the heading text */}
-      <WorkoutList 
+      <WorkoutList
         workouts={workouts} // Pass the fetched workouts
         listLoading={listLoading} // Pass loading state
         listError={listError} // Pass error state
