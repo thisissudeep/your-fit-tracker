@@ -1,6 +1,7 @@
 /* Global styles and CSS Variables for Theming - Refined Minimalist Design */
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap'); /* For a distinct font style */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+/* For a distinct font style */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 
 /* Global resets and body styles */
@@ -8,7 +9,9 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -47,7 +50,7 @@ body.light {
 
   --form-bg-color: rgba(255, 255, 255, 0.85);
   --form-border-color: rgba(233, 236, 239, 0.5);
-  --input-bg-color: transparent;
+  --input-bg-color: #ffffff;
   --input-border-color: #eee;
   --input-text-color: #495057;
 
@@ -93,7 +96,7 @@ body.dark {
 
   --form-bg-color: rgba(52, 58, 64, 0.85);
   --form-border-color: rgba(73, 80, 87, 0.5);
-  --input-bg-color: transparent;
+  --input-bg-color: #2c2f38;
   --input-border-color: #6c757d;
   --input-text-color: #e9ecef;
 
@@ -147,20 +150,31 @@ body.dark {
 
 /* Brand Title */
 .brand-title {
-  font-family: 'Playfair Display', serif; /* Use a distinct font for style */
-  font-size: 2.5rem; /* Make it even larger */
-  font-weight: 700; /* Keep it bold or make it bolder */
-  color: var(--brand-primary); /* Use a brand color from your theme */
-  letter-spacing: 2px; /* Add some letter spacing */
+  font-family: 'Playfair Display', serif;
+  /* Use a distinct font for style */
+  font-size: 2.5rem;
+  /* Make it even larger */
+  font-weight: 700;
+  /* Keep it bold or make it bolder */
+  color: var(--brand-primary);
+  /* Use a brand color from your theme */
+  letter-spacing: 2px;
+  /* Add some letter spacing */
   /* You could also add: */
   /* text-transform: uppercase; */
   /* line-height: 1; */
-  font-family: "Montserrat", sans-serif; /* <<< CRITICAL CHANGE: Matches the "Desert" font */
-  font-size: 2rem; /* <<< CRITICAL CHANGE: Larger size, adjusted for header readability */
-  font-weight: 900; /* <<< CRITICAL CHANGE: Extra bold weight from "Desert" */
-  color: purple; /* <<< CRITICAL CHANGE: White color as requested */
-  letter-spacing: 1px; /* <<< CRITICAL CHANGE: Subtle letter spacing for effect */
-  transition: all 0.3s ease; /* Smooth transition for theme changes */
+  font-family: "Montserrat", sans-serif;
+  /* <<< CRITICAL CHANGE: Matches the "Desert" font */
+  font-size: 2rem;
+  /* <<< CRITICAL CHANGE: Larger size, adjusted for header readability */
+  font-weight: 900;
+  /* <<< CRITICAL CHANGE: Extra bold weight from "Desert" */
+  color: purple;
+  /* <<< CRITICAL CHANGE: White color as requested */
+  letter-spacing: 1px;
+  /* <<< CRITICAL CHANGE: Subtle letter spacing for effect */
+  transition: all 0.3s ease;
+  /* Smooth transition for theme changes */
 }
 
 .main-nav {
@@ -197,13 +211,13 @@ body.dark {
   font-size: 0.95rem;
   font-weight: 500;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .theme-toggle-button:hover {
   background-color: var(--secondary-button-hover-bg-color);
   transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Main content area where pages are rendered */
@@ -222,7 +236,8 @@ body.dark {
 
 /* Dashboard specific override for "All Workouts" heading */
 .all-workouts-heading {
-  color: white !important; /* Force white color for both themes */
+  color: white !important;
+  /* Force white color for both themes */
 }
 
 /* Responsive adjustments */
@@ -233,36 +248,49 @@ body.dark {
     gap: 10px;
     height: auto;
   }
+
   .brand-title {
     font-size: 1.8rem;
   }
+
   .main-nav {
     gap: 15px;
   }
+
   .nav-link {
     font-size: 1rem;
     padding: 6px 10px;
   }
+
   .theme-toggle-button {
     padding: 8px 15px;
     font-size: 0.85rem;
   }
+
   .app-main-content {
     padding-left: 15px;
     padding-right: 15px;
     gap: 25px;
   }
-  body.light, body.dark {
-    --header-height: auto; /* Reset for responsive header height */
+
+  body.light,
+  body.dark {
+    --header-height: auto;
+    /* Reset for responsive header height */
   }
+
   .app-main-content {
     /* This calculation might need fine-tuning based on actual header height in mobile */
-    padding-top: calc(150px + 20px); /* Example for mobile header + desired padding */
+    padding-top: calc(150px + 20px);
+    /* Example for mobile header + desired padding */
   }
+
   /* Responsive adjustments for brand title */
   .brand-title {
-    font-size: 2.2rem; /* Adjust for smaller screens */
-    letter-spacing: 1px; /* Reduce spacing on smaller screens */
+    font-size: 2.2rem;
+    /* Adjust for smaller screens */
+    letter-spacing: 1px;
+    /* Reduce spacing on smaller screens */
   }
 
 }

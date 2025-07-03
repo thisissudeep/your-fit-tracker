@@ -1,6 +1,6 @@
 const express = require('express');
 // Import the controller functions instead of the model directly
-const { getWorkouts, createWorkout } = require('../controllers/workoutController');
+const { getWorkouts, createWorkout, deleteWorkout } = require('../controllers/workoutController');
 
 const router = express.Router(); // Create an Express router instance
 
@@ -13,5 +13,8 @@ router.get('/', getWorkouts);
 // POST /api/workouts
 // Route now just points to the controller function
 router.post('/', createWorkout);
+
+// DELETE /api/workouts/:id
+router.delete('/:id', deleteWorkout);
 
 module.exports = router;

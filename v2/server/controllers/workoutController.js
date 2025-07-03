@@ -58,8 +58,27 @@ const createWorkout = async (req, res) => {
     }
 };
 
+// --- DELETE a workout by ID ---
+const deleteWorkout = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const workout = await Workout.findByIdAndDelete(id);
+
+        if (!workout) {
+            return res.status(404).json({ error: 'Workout not found' });
+        }
+
+        res.status(200).json({ message: 'Workout deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting workout:", error.message);
+        res.status(500).json({ error: 'Failed to delete workout' });
+    }
+};
+
 // Export the controller functions so they can be imported and used by the router
 module.exports = {
     getWorkouts,
-    createWorkout
+    createWorkout,
+    deleteWorkout, 
 };

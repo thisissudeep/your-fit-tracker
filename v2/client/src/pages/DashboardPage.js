@@ -39,6 +39,25 @@ const DashboardPage = () => {
     }
   }, []); // Removed API_URL from dependencies, as API_BASE_URL is now a constant
 
+  const handleDeleteWorkout = async (id) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/workouts/${id}`, {
+        method: 'DELETE',
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Delete failed');
+      }
+
+      // Remove workout from state
+      setWorkouts((prev) => prev.filter((w) => w._id !== id));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   // --- useEffect hook to fetch workouts when the component mounts ---
   // This effect runs once when the DashboardPage component first renders.
   useEffect(() => {
@@ -52,6 +71,7 @@ const DashboardPage = () => {
         workouts={workouts} // Pass the fetched workouts
         listLoading={listLoading} // Pass loading state
         listError={listError} // Pass error state
+        onDelete={handleDeleteWorkout} // Pass the delete handler
       />
     </div>
   );

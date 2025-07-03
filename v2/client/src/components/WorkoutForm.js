@@ -53,6 +53,7 @@ const WorkoutForm = ({ onAddWorkout, isLoading, formError, formSuccess }) => {
             id="exerciseName"
             className={styles.inputField}
             value={exerciseName}
+              placeholder=" " // << required!
             onChange={(e) => setExerciseName(e.target.value)}
             required
             aria-label="Exercise Name"
@@ -67,6 +68,7 @@ const WorkoutForm = ({ onAddWorkout, isLoading, formError, formSuccess }) => {
             id="sets"
             className={styles.inputField}
             value={sets}
+              placeholder=" " // << required!
             onChange={(e) => setSets(e.target.value)}
             required
             min="1"
@@ -82,6 +84,7 @@ const WorkoutForm = ({ onAddWorkout, isLoading, formError, formSuccess }) => {
             id="reps"
             className={styles.inputField}
             value={reps}
+              placeholder=" " // << required!
             onChange={(e) => setReps(e.target.value)}
             required
             min="1"

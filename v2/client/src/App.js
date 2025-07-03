@@ -5,6 +5,8 @@ import DashboardPage from './pages/DashboardPage';
 import WorkoutTrackerPage from './pages/WorkoutTrackerPage';
 import AICounterPage from './pages/AICounterPage';
 import './App.css'; // Global styles and theme definitions
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 // Image imports (relative to src/)
 import dashboardBg from './assets/dashboard-bg.jpg';
@@ -50,9 +52,10 @@ function App() {
           <Link to="/track" className="nav-link"><b>Workout Tracker</b></Link>
           <Link to="/ai-counter" className="nav-link"><b>AI Counter</b></Link>
         </nav>
-        <button onClick={toggleTheme} className="theme-toggle-button">
-          Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+        <button onClick={toggleTheme} className="theme-toggle-button" aria-label="Toggle Theme">
+          <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
         </button>
+
       </header>
 
       <main className="app-main-content">

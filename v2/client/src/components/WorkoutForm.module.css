@@ -1,21 +1,21 @@
 /* Styles for WorkoutForm component (Adjusted) */
-.card { /* Main form card container */
+.card {
   margin: 2rem auto;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 320px; /* REDUCED FORM MAX-WIDTH further */
-  background-color: var(--form-bg-color); /* Uses transparent theme variable */
+  max-width: 320px;
+  background-color: var(--form-bg-color);
   border-radius: 10px;
-  box-shadow: none; /* REMOVED SHADOW */
+  box-shadow: none;
   border: 1px solid var(--form-border-color);
-  padding: 1.2rem; /* Adjusted padding for smaller size */
+  padding: 1.2rem;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .cardHeading {
-  padding: 0.4rem 0; /* Reduced padding */
-  font-size: 1.3rem; /* REDUCED HEADING FONT SIZE */
+  padding: 0.4rem 0;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--heading-color);
   line-height: 1.2;
@@ -29,36 +29,35 @@
 
 .cardHeading small {
   display: block;
-  font-size: .55em; /* REDUCED SMALL TEXT SIZE */
+  font-size: .55em;
   font-weight: 400;
   margin-top: .15em;
   color: var(--secondary-text-color);
 }
 
 .cardForm {
-  padding: 0.8rem 0; /* Reduced padding */
+  padding: 0.8rem 0;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Reduced gap between inputs */
+  gap: 10px;
 }
 
 .input {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   position: relative;
-  padding-top: 1.1rem; /* Adjusted padding for floating label */
 }
 
 .input + .input {
-  margin-top: 0.7rem; /* Reduced margin between inputs */
+  margin-top: 0.7rem;
 }
 
 .inputLabel {
+  position: relative;
   color: var(--secondary-text-color);
-  position: absolute;
-  top: 1.1rem;
-  transition: .25s ease;
-  font-size: 0.8rem; /* Adjusted label font size */
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  transition: color 0.25s ease;
 }
 
 .inputField {
@@ -67,13 +66,14 @@
   background-color: var(--input-bg-color);
   border-bottom: 2px solid var(--input-border-color);
   font: inherit;
-  font-size: 0.9rem; /* REDUCED INPUT FIELD FONT SIZE */
-  padding: .15rem 0; /* Reduced padding */
+  font-size: 0.9rem;
+  padding: .15rem 0;
   color: var(--input-text-color);
   transition: border-bottom-color 0.25s ease, color 0.25s ease;
 }
 
-.inputField:focus, .inputField:valid {
+.inputField:focus,
+.inputField:valid {
   outline: 0;
   border-bottom-color: var(--accent-color);
 }
@@ -81,18 +81,18 @@
 .inputField:focus + .inputLabel,
 .inputField:valid + .inputLabel {
   color: var(--accent-color);
-  transform: translateY(-1.1rem);
-  font-size: 0.7rem; /* Smaller size when floated */
 }
 
+/* Removed label transform/floating logic */
+
 .action {
-  margin-top: 1rem; /* Reduced margin */
+  margin-top: 1rem;
 }
 
 .actionButton {
   font: inherit;
-  font-size: 0.95rem; /* REDUCED BUTTON FONT SIZE */
-  padding: 0.6em; /* Reduced padding */
+  font-size: 0.95rem;
+  padding: 0.6em;
   width: 100%;
   font-weight: 500;
   background-color: var(--button-bg-color);
@@ -101,13 +101,13 @@
   border: 0;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: none; /* REMOVED SHADOW */
+  box-shadow: none;
 }
 
 .actionButton:hover:not(:disabled) {
   background-color: var(--button-hover-bg-color);
   transform: translateY(-1px);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle hover shadow */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .actionButton:disabled {
@@ -118,7 +118,8 @@
   box-shadow: none;
 }
 
-.errorMessage, .successMessage {
+.errorMessage,
+.successMessage {
   margin-top: 0.6rem;
   font-size: 0.75rem;
   padding: 0.4rem;
